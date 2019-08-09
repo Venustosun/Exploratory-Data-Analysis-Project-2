@@ -1,0 +1,10 @@
+setwd("C:\\Users\\qitcw\\Desktop\\pmdata")
+pmemi <- readRDS("pm2.5 emmision.rds")
+head(pmemi)
+## Plot 1
+sm <- with(pmemi, tapply(Emissions, year, sum, na.rm = T))
+df <- data.frame(years = names(sm), sum = sm) 
+options(scipen = 3)
+png("plot1.png", height = 480, width = 480)
+plot1 <- barplot(df[,2], names.arg = c("1999","2002","2005","2008"), xlab = "year", ylab = "Total PM2.5 Emissions (ton)", main =  "PM2.5 Emmision", col = "grey" )
+dev.off()
