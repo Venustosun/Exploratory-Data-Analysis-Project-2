@@ -1,0 +1,13 @@
+## Plot 4
+sou <- readRDS("Source_Classification_Code.rds")
+head(sou)
+ccrs <- grep("coal", sou$Short.Name)
+ccrs <- subset(sou, Short.Name = ccrs)
+ccrs <- subset(pmemi, SCC %in% ccrs)
+years <- as.factor(pmemi$year)
+png("plot4.png", height = 480, width = 480)
+library(ggplot2)
+options(scipen = 3)
+G <- ggplot(pmemi, aes(year, Emissions, fill = "grey")) + geom_bar(stat = "identity") + ylab("coal combustion-related sources PM 2.5 Emissions (tons)") + labs(title = "Coal Combustion-related Source Emissions from 1999-2008")
+print(G)
+dev.off()
