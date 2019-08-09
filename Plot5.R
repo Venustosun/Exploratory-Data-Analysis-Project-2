@@ -1,0 +1,13 @@
+## Plot 5
+setwd("C:\\Users\\qitcw\\Desktop\\pmdata")
+pmemi <- readRDS("pm2.5 emmision.rds")
+subpmemi <- subset(pmemi, fips == "24510")
+sou <- readRDS("Source_Classification_Code.rds")
+emsou <- grep("motor", sou$Short.Name, ignore.case = T)
+emsou <- subset(sou, Short.Name = emsou)
+emsouf <- subset(subpmemi, SCC %in% emsou$SCC)
+sm <- with(emsouf, tapply(Emissions, year, sum, na.rm = T))
+df <- data.frame(years = names(sm), sum = sm) 
+png("plot5.png", height = 480, width = 480)
+P5 <- barplot(df[,2], names.arg = c("1999","2002","2005","2008"), xlab = "year", ylab = "PM2.5 Emmision (ton)", main =  "Motor PM2.5 Emissions in Baltimore", col = "grey" )
+dev.off()
